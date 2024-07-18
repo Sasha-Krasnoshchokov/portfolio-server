@@ -5,13 +5,14 @@ import { IApi } from './types/appService.type';
 export class AppService {
   getCheckConnection(): string {
     console.log('Check connection');
-    return 'You are connected to the server!';
+    return `You've connected to the server!`;
   }
   getApis(): IApi[] {
+    console.log('this.configService.get<string>', process.env.BASE_URL);
     return [
       {
         method: 'get',
-        baseUrl: '',
+        baseUrl: process.env.BASE_URL,
         url: '/apis',
       },
     ];
