@@ -10,6 +10,7 @@ async function server() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
   const envType = configService.get('ENV');
+
   console.log('//********************************************//');
   console.log(`// The Server as ${envType} on a port ${port} //`);
   console.log('//____________________________________________//');
