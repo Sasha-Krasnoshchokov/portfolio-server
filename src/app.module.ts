@@ -1,13 +1,33 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TechStackModule } from './tech-stack/tech-stack.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TechStack } from './tech-stack/entities/tech-stack.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('POSTGRES_HOST'),
+        port: configService.get('POSTGRES_PORT'),
+        url: configService.get('POSTGRES_URL'),
+        username: configService.get('POSTGRES_USER'),
+        password: configService.get('POSTGRES_PASSWORD'),
+        database: configService.get('POSTGRES_DB'),
+        entities: [TechStack],
+        autoLoadEntities: true,
+        // entities: [__dirname + '/../**/*.entity.{js,ts}'],
+        // synchronize: true, // Be cautious about using synchronize in production
+        // logging: true, // typeorm prints all info to the console
+      }),
+      inject: [ConfigService],
     }),
     TechStackModule,
   ],
