@@ -1,3 +1,4 @@
+import { CreateResumeDto } from 'src/resume/dto/create-resume.dto';
 import { CreateTechStackDto } from 'src/tech-stack/dto/create-tech-stack.dto';
 import { IApi } from 'src/types/appService.type';
 
@@ -53,6 +54,20 @@ const apis = (baseUrl: string): IApi[] => [
     url: '/tech-stack',
     params: ['/:id'],
     body: CreateTechStackDto.getDefault(),
+  },
+  {
+    description: 'to create a new resume entity',
+    method: 'post',
+    baseUrl,
+    url: '/resume',
+    body: CreateResumeDto.getDefault(),
+  },
+  {
+    description: 'to upload files',
+    method: 'post',
+    baseUrl,
+    url: '/resume/upload',
+    body: 'a data in the FormData format',
   },
 ];
 
