@@ -48,7 +48,7 @@ export class TechStackService {
         const newTechStack = await this.techStackRepository.save(newStack);
         techStackList.push(newTechStack);
         return {
-          message: 'New tech stack created successfully',
+          message: 'The new tech stack created successfully',
           body: newTechStack,
         };
       } catch (error) {

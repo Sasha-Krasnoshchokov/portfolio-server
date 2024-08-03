@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TechStackModule } from './tech-stack/tech-stack.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TechStack } from './tech-stack/entities/tech-stack.entity';
+import { ResumeModule } from './resume/resume.module';
+import { Resume } from './resume/entities/resume.entity';
 
 @Module({
   imports: [
@@ -21,15 +23,16 @@ import { TechStack } from './tech-stack/entities/tech-stack.entity';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [TechStack],
+        entities: [TechStack, Resume],
         autoLoadEntities: true,
+        synchronize: true, // Be cautious about using synchronize in production
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
-        // synchronize: true, // Be cautious about using synchronize in production
         // logging: true, // typeorm prints all info to the console
       }),
       inject: [ConfigService],
     }),
     TechStackModule,
+    ResumeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
