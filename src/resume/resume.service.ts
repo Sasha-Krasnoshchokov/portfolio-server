@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateResumeDto } from './dto/create-resume.dto';
-import { UpdateResumeDto } from './dto/update-resume.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Resume } from './entities/resume.entity';
 import { Repository } from 'typeorm';
@@ -12,6 +11,10 @@ export class ResumeService {
     @InjectRepository(Resume)
     private readonly resumeRepository: Repository<Resume>,
   ) {}
+
+  async updateResume() {
+    await this.resumeRepository.createQueryBuilder().update('resume').set({ is_selected: false }).execute();
+  }
 
   async saveFile(file: Express.Multer.File) {
     const blob = await put(file.originalname, file.buffer, {
@@ -33,6 +36,7 @@ export class ResumeService {
       console.error('Invalid incoming data!', createResumeDto);
       throw new HttpException('BadRequest', HttpStatus.BAD_REQUEST);
     }
+    await this.updateResume();
 
     const newResume = new CreateResumeDto(createResumeDto);
     if (!newResume.resume_id || !newResume.summary || !newResume.resume_file) {
@@ -52,13 +56,9 @@ export class ResumeService {
     }
   }
 
-  findAll() {
-    return `This action returns all resume`;
-  }
-
   async findOne(id: string) {
     let option: { [key: string]: string | boolean } | null = null;
-    if (id === 'selected') {
+    if (id === 'selected' || id === 'summary') {
       // return the resume with the status - is_selected: true
       option = { is_selected: true };
     } else {
@@ -72,19 +72,28 @@ export class ResumeService {
         console.error("Can't get the resume from the DB!");
         throw new HttpException('InternalServerError', HttpStatus.INTERNAL_SERVER_ERROR);
       }
-      console.log({ selectedResume });
-      return selectedResume.map((item) => item.resume_file);
+      if (id === 'selected') {
+        return selectedResume.map((item) => item.resume_file);
+      } else if (id === 'summary') {
+        const [summary] = selectedResume.map((item) => item.summary);
+        return summary;
+      }
+      return selectedResume;
     } catch (error) {
       console.error(error);
       throw new HttpException('InternalServerError', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  update(id: number, updateResumeDto: UpdateResumeDto) {
-    return `This action updates a #${id} resume`;
-  }
+  // findAll() {
+  //   return `This action returns all resume`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} resume`;
-  }
+  // update(id: number, updateResumeDto: UpdateResumeDto) {
+  //   return `This action updates a #${id} resume`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} resume`;
+  // }
 }

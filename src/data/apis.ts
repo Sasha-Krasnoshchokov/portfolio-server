@@ -37,22 +37,19 @@ const apis = (baseUrl: string): IApi[] => [
     description: 'get the tech stack by id',
     method: 'get',
     baseUrl,
-    url: '/tech-stack',
-    params: ['/:id'],
+    url: '/tech-stack/id',
   },
   {
     description: 'remove the tech stack by id',
     method: 'delete',
     baseUrl,
-    url: '/tech-stack',
-    params: ['/:id'],
+    url: '/tech-stack/id',
   },
   {
     description: 'to update an existed tech stack',
     method: 'patch',
     baseUrl,
-    url: '/tech-stack',
-    params: ['/:id'],
+    url: '/tech-stack/id',
     body: CreateTechStackDto.getDefault(),
   },
   {
@@ -63,11 +60,17 @@ const apis = (baseUrl: string): IApi[] => [
     body: CreateResumeDto.getDefault(),
   },
   {
-    description: 'to upload files',
+    description: 'to upload resume file',
     method: 'post',
     baseUrl,
     url: '/resume/upload',
     body: 'a data in the FormData format',
+  },
+  {
+    description: 'get the resume file by id',
+    method: 'get',
+    baseUrl,
+    url: '/resume/id, the type of the id is: string | selected | summary',
   },
 ];
 
