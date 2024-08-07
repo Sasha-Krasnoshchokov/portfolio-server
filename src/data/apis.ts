@@ -72,6 +72,26 @@ const apis = (baseUrl: string): IApi[] => [
     baseUrl,
     url: '/resume/id, the type of the id is: string | selected | summary',
   },
+  {
+    description: 'to upload main photo file',
+    method: 'post',
+    baseUrl,
+    url: '/personal-data/upload',
+    body: 'a data in the FormData format',
+  },
+  {
+    description: 'to create and save a new personal data entities',
+    method: 'post',
+    baseUrl,
+    url: '/personal-data',
+    body: CreateResumeDto.getDefault(),
+  },
+  {
+    description: 'get the new personal data by lang',
+    method: 'get',
+    baseUrl,
+    url: '/personal-data/:lang',
+  },
 ];
 
 export default apis;

@@ -12,10 +12,6 @@ export class ResumeService {
     private readonly resumeRepository: Repository<Resume>,
   ) {}
 
-  async updateResume() {
-    await this.resumeRepository.createQueryBuilder().update('resume').set({ is_selected: false }).execute();
-  }
-
   async saveFile(file: Express.Multer.File) {
     const blob = await put(file.originalname, file.buffer, {
       access: 'public',
@@ -31,12 +27,16 @@ export class ResumeService {
     return true;
   }
 
+  async updateResumeSelectedStatus() {
+    await this.resumeRepository.createQueryBuilder().update('resume').set({ is_selected: false }).execute();
+  }
+
   async create(createResumeDto: CreateResumeDto) {
     if (!createResumeDto.summary || !createResumeDto.resume_file) {
       console.error('Invalid incoming data!', createResumeDto);
       throw new HttpException('BadRequest', HttpStatus.BAD_REQUEST);
     }
-    await this.updateResume();
+    await this.updateResumeSelectedStatus();
 
     const newResume = new CreateResumeDto(createResumeDto);
     if (!newResume.resume_id || !newResume.summary || !newResume.resume_file) {
