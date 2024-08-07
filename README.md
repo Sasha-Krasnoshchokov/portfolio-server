@@ -7,7 +7,7 @@
 [Portfolio server](https://github.com/Sasha-Krasnoshchokov/portfolio-server) is the backend part of the Portfolio app.
 
   * Built on the [Nest](https://github.com/nestjs/nest) framework using the [TypeScript](https://www.typescriptlang.org/).
-  * Deployed to the [Vercel](https://vercel.com/docs) platform. Vercel Blob and Vercel Postgres are used as a data storage.
+  * Deployed to the [Vercel](https://vercel.com/docs) platform. Vercel Blob and Vercel Postgres are used as data storage.
 
 ## Local deploying
   * Clone the repository
@@ -27,6 +27,7 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 ```
+  * Get or create the .env and .env.development.local files.
 
 ## Stay in touch
 
