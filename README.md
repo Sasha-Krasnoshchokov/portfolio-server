@@ -1,6 +1,6 @@
-<p align="center">
-  <h1>Portfolio server</h1>
-</p>
+<h1 align="center">
+  Portfolio server
+</h1>
 
 ## Description
 
