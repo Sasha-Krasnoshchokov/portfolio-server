@@ -9,6 +9,8 @@ import { ResumeModule } from './resume/resume.module';
 import { Resume } from './resume/entities/resume.entity';
 import { PersonalDataModule } from './personal-data/personal-data.module';
 import { PersonalDatum } from './personal-data/entities/personal-datum.entity';
+import { FilesModule } from './files/files.module';
+import { File } from './files/entities/file.entity';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { PersonalDatum } from './personal-data/entities/personal-datum.entity';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [TechStack, Resume, PersonalDatum],
+        entities: [TechStack, Resume, PersonalDatum, File],
         autoLoadEntities: true,
         synchronize: true, // Be cautious about using synchronize in production
         // entities: [__dirname + '/../**/*.entity.{js,ts}'],
@@ -36,6 +38,7 @@ import { PersonalDatum } from './personal-data/entities/personal-datum.entity';
     TechStackModule,
     ResumeModule,
     PersonalDataModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
