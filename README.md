@@ -12,7 +12,7 @@
 ## Local deploying
   * Clone the repository
 ```bash
-$ https://github.com/Sasha-Krasnoshchokov/portfolio-server.git
+$ git clone https://github.com/Sasha-Krasnoshchokov/portfolio-server.git
 ```
   * Install dependencies
 ```bash
